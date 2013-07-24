@@ -96,7 +96,7 @@ function STM()
 
 
   --
-  -- Function used to copy tables. Retired from http://lua-users.org/wiki/CopyTable
+  -- Function used to copy tables. Retrieved from http://lua-users.org/wiki/CopyTable
   --
   local deepcopy = function(object)
     local lookup_table = {}
@@ -121,6 +121,7 @@ function STM()
   --
   local update_transaction_state = function (transaction)
     if (transaction == nil) then return nil end
+    -- TODO: Rename transaction_id to just id
     local transaction_id = transaction.transaction_id
     linda:set(transaction_id, transaction)
     assert(registered(transaction_id), "Transaction " .. transaction_id .. " was not updated on the table")
@@ -134,6 +135,7 @@ function STM()
     local transaction_id = 0
     local transaction = nil
     acquireLock()  -- Critical
+      -- TODO: This is dumb! Just put values in a list and randomly select one of them
       while(not new_number) do
         transaction_id = "t" .. math.random(seedlimit)  -- Concatenates with 't' to identify transaction objects
         if (not registered(transaction_id)) then new_number = true end  --Searches for the number
