@@ -6,16 +6,16 @@ local linda = lanes.linda()
 local lock = lanes.genlock(linda, 'lock')
 
 local function loop(max)
-	for i = 1, max do
+  for i = 1, max do
         print("sending: " .. i)
         linda:send("x", i)    -- linda as upvalue
     end
 end
 
 local function recebe(str, max)
-	for i = 1, max do
+  for i = 1, max do
         local val = linda:receive(3.0, "x")
-		if val ~= nil then print(str .. " received: " .. val) end
+    if val ~= nil then print(str .. " received: " .. val) end
     end
 end
 
